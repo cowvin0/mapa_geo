@@ -1,0 +1,13 @@
+library(dplyr)
+
+nomes_b <- function(x){
+  x |> 
+  stringr::str_replace_all(pattern = "_", replacement = " ") |> 
+  stringr::str_to_title()
+}
+
+dados |> 
+  dplyr::mutate(metro_quadrado = mean(valor)/area) |> 
+  dplyr::group_by(bairro) |> 
+  dplyr::summarise(n = n(), valor = mean(valor), `metro_quadrado` = mean(metro_quadrado)) |> 
+  dplyr::mutate(bairro = across(bairro, nomes_b))
